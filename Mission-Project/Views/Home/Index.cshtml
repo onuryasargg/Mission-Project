@@ -1,0 +1,35 @@
+﻿@model Mission_Project.Models.Person; // class'ı çağırdık.
+@{
+    ViewData["Title"] = "Home Page";
+}
+<form asp-action="Index">
+
+<div>Personal İnformations about Applying for Job</div>
+
+<div>Your Age</div>
+<label asp-for="age"></label>
+<input asp-for="age"/>
+<span asp-validation-for="age"></span>
+<%: @Html.Label("", (string)ViewBag.Message) %>
+@*<div>Your Technologies</div>
+<label asp-for="technologies"></label>
+<input asp-for="technologies" type="checkbox" value="C#"/>
+<input asp-for="technologies" type="checkbox" value="HTML"/>
+<input asp-for="technologies" type="checkbox" value="JS"/>
+<input asp-for="technologies" type="checkbox" value="MSSQL"/>
+<input asp-for="technologies" type="checkbox" value="ALGORITHM"/>
+<input asp-for="technologies" type="checkbox" value="DATA STRUCTURE"/>
+<span asp-validation-for="technologies"></span>
+
+<div>ID</div>
+<label asp-for="identityNumber"></label>
+<input asp-for="identityNumber" />
+<span asp-validation-for="identityNumber"></span>
+
+<div>Deneyim Yılı</div>
+<label asp-for="experiencedWork"></label>
+<input asp-for="experiencedWork" />
+<span asp-validation-for="experiencedWork"></span>*@
+   
+<button type="submit">Submit</button> 
+</form>
