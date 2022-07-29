@@ -1,35 +1,38 @@
-﻿@model Mission_Project.Models.Person; // class'ı çağırdık.
+﻿@model Mission_Project.Models.Person // class'ı çağırdık.
 @{
     ViewData["Title"] = "Home Page";
 }
 <form asp-action="Index">
 
 <div>Personal İnformations about Applying for Job</div>
+<br/>
+@using (Html.BeginForm())
+    {
+        @*@Html.AntiForgeryToken()
+        @Html.LabelFor(m=> Model.Age)
+        @Html.EditorFor(m=>Model.Age)
+        @Html.ValidationMessageFor(m=> Model.Age)*@
+        <br/>
+        @*if(Model.Technologies != null)
+        {
+             for (int i = 0; i < Model.Technologies.Count; i++)
+            {
 
-<div>Your Age</div>
-<label asp-for="age"></label>
-<input asp-for="age"/>
-<span asp-validation-for="age"></span>
-<%: @Html.Label("", (string)ViewBag.Message) %>
-@*<div>Your Technologies</div>
-<label asp-for="technologies"></label>
-<input asp-for="technologies" type="checkbox" value="C#"/>
-<input asp-for="technologies" type="checkbox" value="HTML"/>
-<input asp-for="technologies" type="checkbox" value="JS"/>
-<input asp-for="technologies" type="checkbox" value="MSSQL"/>
-<input asp-for="technologies" type="checkbox" value="ALGORITHM"/>
-<input asp-for="technologies" type="checkbox" value="DATA STRUCTURE"/>
-<span asp-validation-for="technologies"></span>
+                @Html.CheckBoxFor(m => Model.Technologies[i].IsChecked)
+                @Model.Technologies[i].Text
+                @Html.HiddenFor(m => Model.Technologies[i].Value)
+                @Html.HiddenFor(m => Model.Technologies[i].Text)<br />
 
-<div>ID</div>
-<label asp-for="identityNumber"></label>
-<input asp-for="identityNumber" />
-<span asp-validation-for="identityNumber"></span>
-
-<div>Deneyim Yılı</div>
-<label asp-for="experiencedWork"></label>
-<input asp-for="experiencedWork" />
-<span asp-validation-for="experiencedWork"></span>*@
-   
-<button type="submit">Submit</button> 
+            }
+        
+        }*@
+        @Html.AntiForgeryToken()
+        @Html.LabelFor(m=> Model.identityNumber)
+        @Html.EditorFor(m=>Model.identityNumber)
+        @Html.ValidationMessageFor(m=> Model.identityNumber)
+        <div>
+            <input type="submit" value="Save"/>
+        </div>
+    }
+    <Result: @Html.Label("", (string)ViewBag.Message)>
 </form>
