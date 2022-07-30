@@ -8,12 +8,13 @@
 <br/>
 @using (Html.BeginForm())
     {
-        @*@Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
         @Html.LabelFor(m=> Model.Age)
         @Html.EditorFor(m=>Model.Age)
-        @Html.ValidationMessageFor(m=> Model.Age)*@
+        @Html.ValidationMessageFor(m=> Model.Age, "")
         <br/>
-        @*if(Model.Technologies != null)
+
+        if(Model.Technologies != null)
         {
              for (int i = 0; i < Model.Technologies.Count; i++)
             {
@@ -21,18 +22,26 @@
                 @Html.CheckBoxFor(m => Model.Technologies[i].IsChecked)
                 @Model.Technologies[i].Text
                 @Html.HiddenFor(m => Model.Technologies[i].Value)
-                @Html.HiddenFor(m => Model.Technologies[i].Text)<br />
-
+                @Html.HiddenFor(m => Model.Technologies[i].Text)
+                <br/>
             }
-        
-        }*@
-        @Html.AntiForgeryToken()
-        @Html.LabelFor(m=> Model.identityNumber)
-        @Html.EditorFor(m=>Model.identityNumber)
-        @Html.ValidationMessageFor(m=> Model.identityNumber)
+            @Html.ValidationMessageFor(m=>Model.Technologies, "")
+        }
+        <br/>
+
+        @Html.LabelFor(m=> Model.IdentificationNumber)
+        @Html.EditorFor(m=>Model.IdentificationNumber, new {htmlAttributes = new {min = 10000000146, max = 99999999990} })
+        @Html.ValidationMessageFor(m=> Model.IdentificationNumber, "")
+        <br/>
+
+        @Html.LabelFor(m=> Model.Experience)
+        @Html.EditorFor(m=>Model.Experience)
+        @Html.ValidationMessageFor(m=> Model.Experience, "")
+
         <div>
             <input type="submit" value="Save"/>
         </div>
+        
     }
-    <Result: @Html.Label("", (string)ViewBag.Message)>
+    @Html.Raw(TempData["msg"])
 </form>
