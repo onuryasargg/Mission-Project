@@ -7,12 +7,16 @@ namespace Mission_Project.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        double percentage = 0;
+        bool confirmed = true;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        //private readonly ILogger<HomeController> _logger;
+
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
         public IActionResult Index()
         {
             //Creating object of Person class
@@ -27,7 +31,7 @@ namespace Mission_Project.Controllers
                 new Technology { Value = 1, Text = "ALGORITHM", IsChecked = false },
                 new Technology { Value = 1, Text = "DATA STRUCTURE", IsChecked = false },
             };
-            //assigning records to the CheckBoxItems list
+            //assigning records to the Technologies list
             person.Technologies = technology;
             return View(person);
         }
@@ -35,73 +39,94 @@ namespace Mission_Project.Controllers
         [HttpPost]
         public IActionResult Index(Person person)
         {
-            double percentage = 0;
-            bool confirmed = true;
-            string TC = Convert.ToString(person.IdentificationNumber);
-            int odd = 0; int even = 0;
-            int tenth = Convert.ToInt32(TC[9].ToString());
-            int eleventh = Convert.ToInt32(TC[10].ToString());
-
+            //Checking to bind the incoming values from the request to model correctly
             if (ModelState.IsValid)
             {
+                // Checking Technologies of person is a not null
                 if (person.Technologies != null)
                 {
-                    foreach (var item in person.Technologies)
-                    {
-                        if (item.IsChecked)
-                        {
-                            percentage += 16.66666666666667;
-                        }
-                    }
+                    PercentageOfTechnologies(person.Technologies);
                 }
-                for (int i = 0; i < 10; i++)
+                // Checking that the Identification Number is a real number
+                CalculateIdentification(person.IdentificationNumber);
+                // We are gonna send him/her a message about his/her result of job application
+                Result(person,percentage,confirmed);
+            }
+            // After all procedures valid or not we are gonna see our page or information note about error in view.
+            return View(person);
+        }
+        public double PercentageOfTechnologies(List<Technology> Technologies)
+        {
+            //checkboxes of each of the technologies is checked then percentage+= 16.66666666666667
+            foreach (var item in Technologies)
                 {
-                    if (i % 2 == 0)
+                    if (item.IsChecked)
                     {
-                        if (i != 10)
-                        {
-                            odd = (odd + Convert.ToInt32(TC[i].ToString())); // 7 ile çarpılacak sayıları topluyoruz
-                        }
-                    }
-                    else
-                    {
-                        if (i != 9)
-                        {
-                            even = (even + Convert.ToInt32(TC[i].ToString()));
-                        }
+                        percentage += 16.66666666666667;
                     }
                 }
+            return percentage; // return, result double percentage 
+        }
+        public bool CalculateIdentification(long IdentificationNumber)
+        {
+            string TC = Convert.ToString(IdentificationNumber);
+            int odd = 0; int even = 0;
+            int tenth = Convert.ToInt32(TC[9].ToString()); // tenth equal to TC's 10th number
+            int eleventh = Convert.ToInt32(TC[10].ToString()); // eleventh equal to TC' 11th number
 
-                if ((((odd * 7) + (even * 9)) % 10 == tenth) && ((odd * 8) % 10 == eleventh))
+            for (int i = 0; i < 10; i++) // the for loop foreach tc's numbers
+            {
+                if (i % 2 == 0) // if remainder is zero(0) then you are even or not
                 {
-                    confirmed = true;
+                    if (i != 10) // if i is equal to TC's eleventh number then dont do this
+                    {
+                        odd = (odd + Convert.ToInt32(TC[i].ToString())); // 7 ile çarpılacak sayıları topluyoruz
+                    }
                 }
                 else
                 {
-                    confirmed = false;
-                }
-                if (person.Age < 18 && percentage < 25 && person.Experience < 1 && confirmed == false)
-                {
-                    TempData["msg"] = "<script>alert('AutoRejected');</script>";
-                }
-                else if (person.Age > 18 && percentage > 75 && person.Experience > 1 && confirmed == true)
-                {
-                    TempData["msg"] = "<script>alert('AutoAccepted');</script>";
-                }
-                else if (person.Age < 18)
-                {
-                    TempData["msg"] = "<script>alert('TransferredToHR');</script>";
-                }
-                else if (percentage >= 25 && percentage <= 50 && person.Experience >= 1 && person.Experience <= 2)
-                {
-                    TempData["msg"] = "<script>alert('TransferredToLead');</script>";
-                }
-                else if (percentage >= 50 && percentage <= 75 && person.Experience > 2)
-                {
-                    TempData["msg"] = "<script>alert('TransferredToCTO');</script>";
+                    if (i != 9) // if i is equal to TC's tenth number then dont do this
+                    {
+                        even = (even + Convert.ToInt32(TC[i].ToString()));
+                    }
                 }
             }
-            return View(person);
+
+            if ((((odd * 7) + (even * 9)) % 10 == tenth) && ((odd * 8) % 10 == eleventh))
+            {
+                confirmed = true;
+            }
+            else
+            {
+                confirmed = false;
+            }
+            return confirmed;
+        }
+        // We will see him/her message preliminary information about his/her job application
+        public string Result(Person person, double percentage, bool confirmed)
+        {
+            string resultText = "";
+            if (person.Age < 18 && percentage < 25 && confirmed == false && person.Experience < 1)
+            {
+                resultText = "AutoRejected";
+            }
+            else if(person.Age < 18)
+            {
+                resultText = "TransferredToHR";
+            }
+            if (person.Age > 18 && percentage > 75 && confirmed == true && person.Experience > 1)
+            {
+                resultText = "AutoAccepted";
+            }
+            if (percentage >= 25 && percentage <= 50 && person.Experience >= 1 && person.Experience <= 2)
+            {
+                resultText = "TransferredToLead";
+            }
+            if (percentage >= 50 && percentage <= 75 && person.Experience > 2)
+            {
+                resultText = "TransferredToCTO";
+            }
+            return resultText;
         }
         public IActionResult Privacy()
         {

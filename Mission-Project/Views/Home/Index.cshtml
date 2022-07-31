@@ -1,4 +1,4 @@
-﻿@model Mission_Project.Models.Person // class'ı çağırdık.
+﻿@model Mission_Project.Models.Person
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -43,5 +43,5 @@
         </div>
         
     }
-    @Html.Raw(TempData["msg"])
+    <div>@Html.EditorFor(m=>Model.ResultText)</div>
 </form>
