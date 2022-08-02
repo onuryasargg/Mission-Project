@@ -16,12 +16,12 @@ namespace TestPerson
             // Arrange
 
             var technologies = new List<Technology>(){
-            new Technology { Value = 1, Text = "C#", IsChecked = true },
-            new Technology { Value = 1, Text = "MSSQL", IsChecked = true },
-            new Technology { Value = 1, Text = "JS", IsChecked = false },
-            new Technology { Value = 1, Text = "MSSQL", IsChecked = false },
-            new Technology { Value = 1, Text = "ALGORITHM", IsChecked = false },
-            new Technology { Value = 1, Text = "DATA STRUCTURE", IsChecked = false }};
+            new Technology { Text = "C#", IsChecked = true },
+            new Technology { Text = "MSSQL", IsChecked = true },
+            new Technology { Text = "JS", IsChecked = false },
+            new Technology { Text = "MSSQL", IsChecked = false },
+            new Technology { Text = "ALGORITHM", IsChecked = false },
+            new Technology { Text = "DATA STRUCTURE", IsChecked = false }};
 
             // Act
 
@@ -29,7 +29,7 @@ namespace TestPerson
 
             // Assert
 
-            Assert.Equal(percentageOfTechnologies, 33.33333333333334);
+            Assert.Equal(33.33333333333334, percentageOfTechnologies);
         }
         [Fact]
         public void Calculate_Identification_Test()
@@ -44,7 +44,7 @@ namespace TestPerson
 
             // Assert
 
-            Assert.Equal(confirmed, true);
+            Assert.True(confirmed);
         }
         [Fact]
         public void ResultA_Test()
@@ -62,7 +62,7 @@ namespace TestPerson
 
             // Assert
 
-            Assert.Equal(result, "AutoRejected");
+            Assert.Equal("AutoRejected", result);
         }
         [Fact]
         public void ResultB_Test()
@@ -80,7 +80,7 @@ namespace TestPerson
 
             // Assert
 
-            Assert.Equal(result, "TransferredToHR");
+            Assert.Equal("TransferredToHR", result);
         }
         [Fact]
         public void ResultC_Test()
@@ -98,7 +98,7 @@ namespace TestPerson
 
             // Assert
 
-            Assert.Equal(result, "AutoAccepted");
+            Assert.Equal("AutoAccepted", result);
         }
         [Fact]
         public void ResultD_Test()
@@ -114,7 +114,7 @@ namespace TestPerson
 
             // Assert
 
-            Assert.Equal(result, "TransferredToLead");
+            Assert.Equal("TransferredToLead", result);
         }
         [Fact]
         public void ResultE_Test()
@@ -129,7 +129,7 @@ namespace TestPerson
 
             // Assert
 
-            Assert.Equal(result, "TransferredToCTO");
+            Assert.Equal("TransferredToCTO", result);
         }
     }
 }

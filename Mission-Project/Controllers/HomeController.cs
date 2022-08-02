@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mission_Project.Models;
 using System.Diagnostics;
-using System.Text;
 
 namespace Mission_Project.Controllers
 {
     public class HomeController : Controller
     {
-        double percentage = 0;
+        double percentage = 0; // global values
         bool confirmed = true;
+        string resultText = "";
 
         //private readonly ILogger<HomeController> _logger;
 
@@ -24,12 +24,12 @@ namespace Mission_Project.Controllers
             //Adding items to the list
             List<Technology> technology = new List<Technology>()
             {
-                new Technology { Value = 1, Text = "C#", IsChecked = true },
-                new Technology { Value = 1, Text = "HTML", IsChecked = false },
-                new Technology { Value = 1, Text = "JS", IsChecked = false },
-                new Technology { Value = 1, Text = "MSSQL", IsChecked = false },
-                new Technology { Value = 1, Text = "ALGORITHM", IsChecked = false },
-                new Technology { Value = 1, Text = "DATA STRUCTURE", IsChecked = false },
+                new Technology { Text = "C#", IsChecked = true },
+                new Technology { Text = "HTML", IsChecked = false },
+                new Technology { Text = "JS", IsChecked = false },
+                new Technology { Text = "MSSQL", IsChecked = false },
+                new Technology { Text = "ALGORITHM", IsChecked = false },
+                new Technology { Text = "DATA STRUCTURE", IsChecked = false },
             };
             //assigning records to the Technologies list
             person.Technologies = technology;
@@ -72,9 +72,9 @@ namespace Mission_Project.Controllers
             string TC = Convert.ToString(IdentificationNumber);
             int odd = 0; int even = 0;
             int tenth = Convert.ToInt32(TC[9].ToString()); // tenth equal to TC's 10th number
-            int eleventh = Convert.ToInt32(TC[10].ToString()); // eleventh equal to TC' 11th number
+            int eleventh = Convert.ToInt32(TC[10].ToString()); // eleventh equal to TC's 11th number
 
-            for (int i = 0; i < 10; i++) // the for loop foreach tc's numbers
+            for (int i = 0; i < 10; i++) // the for loop foreach TC's numbers
             {
                 if (i % 2 == 0) // if remainder is zero(0) then you are even or not
                 {
@@ -100,12 +100,11 @@ namespace Mission_Project.Controllers
             {
                 confirmed = false;
             }
-            return confirmed;
+            return confirmed; // return, result bool confirmed 
         }
         // We will see him/her message preliminary information about his/her job application
         public string Result(Person person, double percentage, bool confirmed)
         {
-            string resultText = "";
             if (person.Age < 18 && percentage < 25 && confirmed == false && person.Experience < 1)
             {
                 resultText = "AutoRejected";
@@ -126,7 +125,8 @@ namespace Mission_Project.Controllers
             {
                 resultText = "TransferredToCTO";
             }
-            return resultText;
+            ViewBag.Message = resultText;
+            return resultText; // return string message
         }
         public IActionResult Privacy()
         {

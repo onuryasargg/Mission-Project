@@ -1,6 +1,7 @@
 ﻿@model Mission_Project.Models.Person
 @{
     ViewData["Title"] = "Home Page";
+    var resultText = ViewBag.Message;
 }
 <form asp-action="Index">
 
@@ -21,7 +22,6 @@
 
                 @Html.CheckBoxFor(m => Model.Technologies[i].IsChecked)
                 @Model.Technologies[i].Text
-                @Html.HiddenFor(m => Model.Technologies[i].Value)
                 @Html.HiddenFor(m => Model.Technologies[i].Text)
                 <br/>
             }
@@ -41,7 +41,6 @@
         <div>
             <input type="submit" value="Save"/>
         </div>
-        
+        <div>@resultText</div>
     }
-    <div>@Html.EditorFor(m=>Model.ResultText)</div>
 </form>
