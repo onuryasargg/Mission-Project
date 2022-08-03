@@ -3,7 +3,6 @@
 --Perşembe 28.07.2022--
 
 html taslağını, person class'ını oluşturdum
-daha sonra html de ki verilerin controller'a gidebilmesi için class oluşturdum
 person.age doğrulaması yaptım çalıştırana kadar
 taslak fonksiyonları çıkardım
 
