@@ -7,7 +7,6 @@
     }
     public class Person
     {
-        public int PersonId { get; set; }
         public byte Age { get; set; }
         public List<Technology>? Technologies { get; set; }
         public long IdentificationNumber { get; set; }

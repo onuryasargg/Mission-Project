@@ -39,25 +39,23 @@ namespace Mission_Project.Controllers
         [HttpPost]
         public IActionResult Index(Person person)
         {
-            //Checking to bind the incoming values from the request to model correctly
-            if (ModelState.IsValid)
+            
+            // Checking Technologies of person is a not null
+            if (person.Technologies != null)
             {
-                // Checking Technologies of person is a not null
-                if (person.Technologies != null)
-                {
-                    PercentageOfTechnologies(person.Technologies);
-                }
-                // Checking that the Identification Number is a real number
-                CalculateIdentification(person.IdentificationNumber);
-                // We are gonna send him/her a message about his/her result of job application
-                Result(person,percentage,confirmed);
+                PercentageOfTechnologies(person.Technologies);
             }
+            // Checking that the Identification Number is a real number
+            CalculateIdentification(person.IdentificationNumber);
+            // We are gonna send him/her a message about his/her result of job application
+            Result(person,percentage,confirmed);
+            ViewBag.Message = resultText;
             // After all procedures valid or not we are gonna see our page or information note about error in view.
             return View(person);
         }
         public double PercentageOfTechnologies(List<Technology> Technologies)
         {
-            //checkboxes of each of the technologies is checked then percentage+= 16.66666666666667
+            //checkboxes of each of the technologies is checked then percentage += 16.66666666666667
             foreach (var item in Technologies)
                 {
                     if (item.IsChecked)
@@ -125,7 +123,6 @@ namespace Mission_Project.Controllers
             {
                 resultText = "TransferredToCTO";
             }
-            ViewBag.Message = resultText;
             return resultText; // return string message
         }
         public IActionResult Privacy()

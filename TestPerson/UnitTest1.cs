@@ -16,10 +16,10 @@ namespace TestPerson
             // Arrange
 
             var technologies = new List<Technology>(){
-            new Technology { Text = "C#", IsChecked = true },
+            new Technology { Text = "C#", IsChecked = false },
             new Technology { Text = "MSSQL", IsChecked = true },
             new Technology { Text = "JS", IsChecked = false },
-            new Technology { Text = "MSSQL", IsChecked = false },
+            new Technology { Text = "MSSQL", IsChecked = true },
             new Technology { Text = "ALGORITHM", IsChecked = false },
             new Technology { Text = "DATA STRUCTURE", IsChecked = false }};
 
